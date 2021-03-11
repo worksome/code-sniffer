@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<ruleset name="Worksome">
+    <description>Worksome Coding Standard</description>
+
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="dd" value="null"/>
+                <element key="dump" value="null"/>
+                <element key="cc" value="null"/>
+                <element key="c" value="null"/>
+                <element key="var_dump" value="null"/>
+                <element key="ddd" value="null"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Generic.VersionControl.GitMergeConflict">
+        <properties>
+            <property name="supportedTokenizers" type="array" value="PHP,JS,CSS,JSON"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.RequireOneNamespaceInFile"/>
+    <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+    <rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
+        <properties>
+            <property name="linesCountAfterOpeningBrace" value="0"/>
+            <property name="linesCountBeforeClosingBrace" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+        <properties>
+            <property name="forbiddenAnnotations" type="array">
+                <element value="@package"/>
+                <element value="@author"/>
+                <element value="@created"/>
+                <element value="@version"/>
+                <element value="@copyright"/>
+                <element value="@license"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Commenting.UselessFunctionDocComment"/>
+
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="PSR2.Namespaces.NamespaceDeclaration"/>
+
+    <!-- Private methods MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Private properties MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <rule ref="Generic.Files.LineEndings.InvalidEOLChar"/>
+
+    <rule ref="PSR1">
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <rule ref="PSR12.Traits.UseDeclaration"/>
+    <rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+    <rule ref="SlevomatCodingStandard.PHP.UselessSemicolon"/>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
+    <rule ref="SlevomatCodingStandard.PHP.ShortList"/>
+    <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
+    <rule ref="SlevomatCodingStandard.Commenting.UselessInheritDocComment"/>
+    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenComments">
+        <properties>
+            <property name="forbiddenCommentPatterns" type="array">
+                <element value="/.*phpstorm.*/"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+</ruleset>
