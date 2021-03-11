@@ -20,7 +20,7 @@ class DisallowEnvUsageSniff implements Sniff
         $path = $phpcsFile->getFilename();
 
         // Check if method is env method.
-        if (mb_strtolower($string) !== 'env') {
+        if (strtolower($string) !== 'env') {
             return;
         }
 

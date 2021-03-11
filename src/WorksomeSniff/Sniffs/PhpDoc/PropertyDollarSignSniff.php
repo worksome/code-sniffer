@@ -4,6 +4,7 @@ namespace Worksome\WorksomeSniff\Sniffs\PhpDoc;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use function Safe\preg_replace;
 
 class PropertyDollarSignSniff implements Sniff
 {
@@ -46,11 +47,9 @@ class PropertyDollarSignSniff implements Sniff
             self::class
         );
 
-        $replacement = \Safe\preg_replace(
-            $regex,
+        $replacement = preg_replace($regex,
             '$1\$$3',
-            $value
-        );
+            $value);
 
         $phpcsFile->fixer->replaceToken(
             $stackPtr+2,
