@@ -63,7 +63,7 @@ Checks if all config files are written in kebab case.
 ### Disallow env usage
 Makes sure that you don't use `env` helper in your code, except for config files.
 
-## Generic
+## PhpDoc
 All custom sniffs which are not specific to Laravel.
 
 ### Property dollar sign
@@ -74,5 +74,18 @@ Makes sure that you always have a dollar sign in your properties defined in phpd
  */
 class User {}
 ```
+
+### Param tags with no type or comment
+This removes all `@param` tags which has no specified a type or comment
+```php
+/**
+ * @param string $name
+ * @param $type some random type
+ * @param $other // <-- will be removed
+ */
+public function someMethod($name, $type, $other): void
+{}
+```
+
 
 This is mainly because phpstan requires this before it sees the property as valid.

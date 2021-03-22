@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<phpunit
+        bootstrap="tests/bootstrap.php"
+        colors="true"
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        beStrictAboutChangesToGlobalState="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTestsThatDoNotTestAnything="true"
+        beStrictAboutTodoAnnotatedTests="true"
+        cacheResult="true"
+        stopOnDefect="true"
+        executionOrder="defects"
+>
+    <testsuites>
+        <testsuite name="Worksome Code Sniffers">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
