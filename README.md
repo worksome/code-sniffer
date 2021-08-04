@@ -63,6 +63,13 @@ Checks if all config files are written in kebab case.
 ### Disallow env usage
 Makes sure that you don't use `env` helper in your code, except for config files.
 
+### Event listener suffix
+Enforces event listeners to end with a specific suffix, this suffix is defaulted to `Listener`.
+
+| parameters | defaults |
+| --- | ---  |
+| suffix | Listener |
+
 ## PhpDoc
 All custom sniffs which are not specific to Laravel.
 
