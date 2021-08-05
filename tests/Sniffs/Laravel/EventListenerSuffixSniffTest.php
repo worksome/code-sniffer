@@ -25,8 +25,6 @@ class EventListenerSuffixSniffTest extends TestCase
             line: 5,
             code: EventListenerSuffixSniff::class
         );
-
-        self::assertAllFixedInFile($report);
     }
 
     public function testCanChangeSuffix(): void
@@ -45,10 +43,7 @@ class EventListenerSuffixSniffTest extends TestCase
             line: 5,
             code: EventListenerSuffixSniff::class
         );
-
-        self::assertAllFixedInFile($report);
     }
-
 
     protected static function getSniffClassName(): string
     {

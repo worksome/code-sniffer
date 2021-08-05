@@ -34,15 +34,10 @@ class EventListenerSuffixSniff implements Sniff
             return;
         }
 
-        $phpcsFile->addFixableError(
+        $phpcsFile->addError(
             "Listeners should have `Listener` suffix.",
             $classNamePointer,
             self::class,
-        );
-
-        $phpcsFile->fixer->replaceToken(
-            $classNamePointer,
-            "$className{$this->suffix}"
         );
     }
 }
