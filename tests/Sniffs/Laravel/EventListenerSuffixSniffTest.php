@@ -9,14 +9,14 @@ class EventListenerSuffixSniffTest extends TestCase
 {
     public function testNoErrors(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/App/Listeners/CorrectListenerNameListener.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/CorrectListenerNameListener.php');
 
         self::assertNoSniffErrorInFile($report);
     }
 
     public function testErrors(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/App/Listeners/WrongListenerName.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/WrongListenerName.php');
 
         self::assertSame(1, $report->getErrorCount());
 
@@ -32,7 +32,7 @@ class EventListenerSuffixSniffTest extends TestCase
     public function testCanChangeSuffix(): void
     {
         $report = self::checkFile(
-            __DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/App/Listeners/ChangedSuffixListener.php',
+            __DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/ChangedSuffixListener.php',
             [
                 'suffix' => 'Hears'
             ]

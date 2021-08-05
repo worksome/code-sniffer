@@ -22,7 +22,7 @@ class EventListenerSuffixSniff implements Sniff
         $path = $phpcsFile->getFilename();
 
         // Filter away non listener classes
-        if (!str_contains($path, 'App/Listeners/')) {
+        if (!str_contains($path, 'app/Listeners/')) {
             return;
         }
 
