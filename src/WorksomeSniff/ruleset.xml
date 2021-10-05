@@ -57,10 +57,6 @@
 
     <rule ref="Generic.Files.LineEndings.InvalidEOLChar"/>
 
-    <rule ref="PSR1">
-        <exclude name="Generic.Files.LineLength"/>
-    </rule>
-
     <rule ref="PSR12.Traits.UseDeclaration"/>
     <rule ref="PSR12.Keywords.ShortFormTypeKeywords"/>
 
