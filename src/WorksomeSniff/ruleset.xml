@@ -36,6 +36,7 @@
                 <element value="@version"/>
                 <element value="@copyright"/>
                 <element value="@license"/>
+                <element value="@inheritDoc"/>
             </property>
         </properties>
     </rule>
@@ -94,4 +95,21 @@
             <property name="maxPercentage" value="70"/>
         </properties>
     </rule>
+    <rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    <rule ref="SlevomatCodingStandard.Classes.MethodSpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.PropertySpacing"/>
+    <rule ref="SlevomatCodingStandard.Classes.ClassMemberSpacing"/>
+    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+        <properties>
+            <property name="searchAnnotations" value="true"/>
+            <property name="ignoredAnnotationNames" type="array">
+                <element value="@deprecated"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.UselessAlias"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHintSpacing"/>
+    <rule ref="PSR12"/>
 </ruleset>
