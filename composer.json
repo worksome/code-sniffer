@@ -17,10 +17,7 @@
     "autoload-dev": {
         "psr-4": {
             "Worksome\\WorksomeSniff\\Tests\\": "tests"
-        },
-        "files": [
-            "build/HasFactory.php"
-        ]
+        }
     },
     "require": {
         "PHP": "^8.0",
