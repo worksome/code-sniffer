@@ -8,7 +8,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class DisallowHasFactorySniff implements Sniff
 {
-    private const HAS_FACTORY_NAMESPACE = "Illuminate\\Database\\Eloquent\\Factories\\HasFactory";
+    private const HAS_FACTORY_FQCN = "Illuminate\\Database\\Eloquent\\Factories\\HasFactory";
 
     private ?string $partial = null;
 
@@ -37,7 +37,7 @@ class DisallowHasFactorySniff implements Sniff
             $givenNamespace = $this->partial . Str::after($givenNamespace, Str::afterLast($this->partial, "\\"));
         }
 
-        if ($givenNamespace !== self::HAS_FACTORY_NAMESPACE) {
+        if ($givenNamespace !== self::HAS_FACTORY_FQCN) {
             return false;
         }
 
@@ -46,7 +46,7 @@ class DisallowHasFactorySniff implements Sniff
 
     private function trackRelevantPartialNamespace(string $givenNamespace): void
     {
-        Str::of(self::HAS_FACTORY_NAMESPACE)
+        Str::of(self::HAS_FACTORY_FQCN)
             ->explode("\\")
             ->skip(1)
             ->reduce(function (string $carry, string $item) use ($givenNamespace) {
