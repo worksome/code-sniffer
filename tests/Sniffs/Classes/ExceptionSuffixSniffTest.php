@@ -56,20 +56,20 @@ class ExceptionSuffixSniffTest extends TestCase
 
     public function testErrorWhenExtendingExceptionAndInterface(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/ExceptionSuffixSniff/WrongExceptionNameWithInterface.php.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/ExceptionSuffixSniff/WrongExceptionNameWithInterface.php');
 
         self::assertSame(1, $report->getErrorCount());
 
         self::assertSniffError(
             phpcsFile: $report,
-            line: 5,
+            line: 8,
             code: ExceptionSuffixSniff::class
         );
     }
 
     public function testErrorWhenExtendingCustomExceptionWithFQCN(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/ExceptionSuffixSniff/WrongExceptionNameWithCustomFullyQualified.php.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/ExceptionSuffixSniff/WrongExceptionNameWithCustomFullyQualified.php');
 
         self::assertSame(1, $report->getErrorCount());
 

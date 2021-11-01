@@ -13,23 +13,37 @@ class ExceptionSuffixSniff implements Sniff
     public function register(): array
     {
         return [
-            T_CLASS,
+            T_EXTENDS
         ];
     }
 
     public function process(File $phpcsFile, $stackPtr)
     {
-        $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 6, 1);
+        $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 2, 1);
 
-        if($baseClassName === '\\') {
-            $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 6, 2);
+        foreach ($phpcsFile->getTokens() as $index => $token) {
+            if($token['type'] === 'T_EXTENDS') {
+                $extendTokens = array_slice($phpcsFile->getTokens(), $index + 2, null, false);
+                foreach ($extendTokens as $extendIndex => $extendToken) {
+                    if($extendToken['type'] === 'T_WHITESPACE') {
+                        $r = array_slice($extendTokens, $extendIndex - 1, null, false);
+                        if(Str::contains($r[0]['content'], $this->suffix)) {
+                            $baseClassName = $r[0]['content'];
+                        }
+                    }
+                }
+            }
         }
 
-        if (!Str::endsWith($baseClassName, $this->suffix)) {
+        if($baseClassName === '\\') {
+            $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 2, 2);
+        }
+
+        if (!Str::endsWith($baseClassName, $this->suffix) || !Str::contains($baseClassName, 'Exception')) {
             return;
         }
 
-        $classNamePointer = $stackPtr + 2;
+        $classNamePointer = $stackPtr - 2;
 
         $className = $phpcsFile->getTokensAsString($classNamePointer, 1);
 
