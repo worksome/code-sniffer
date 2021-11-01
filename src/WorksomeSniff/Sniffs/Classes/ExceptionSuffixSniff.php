@@ -19,25 +19,12 @@ class ExceptionSuffixSniff implements Sniff
 
     public function process(File $phpcsFile, $stackPtr)
     {
-        $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 2, 1);
+        $baseClassNameLength = 0;
 
-        foreach ($phpcsFile->getTokens() as $index => $token) {
-            if($token['type'] === 'T_EXTENDS') {
-                $extendTokens = array_slice($phpcsFile->getTokens(), $index + 2, null, false);
-                foreach ($extendTokens as $extendIndex => $extendToken) {
-                    if($extendToken['type'] === 'T_WHITESPACE') {
-                        $r = array_slice($extendTokens, $extendIndex - 1, null, false);
-                        if(Str::contains($r[0]['content'], $this->suffix)) {
-                            $baseClassName = $r[0]['content'];
-                        }
-                    }
-                }
-            }
+        while (Str::endsWith($phpcsFile->getTokensAsString($stackPtr + 2, $baseClassNameLength + 1),'\\')) {
+            $baseClassNameLength += 2;
         }
-
-        if($baseClassName === '\\') {
-            $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 2, 2);
-        }
+        $baseClassName = $phpcsFile->getTokensAsString($stackPtr +2, max($baseClassNameLength, 1));
 
         if (!Str::endsWith($baseClassName, $this->suffix) || !Str::contains($baseClassName, 'Exception')) {
             return;

@@ -87,6 +87,19 @@ class ExceptionSuffixSniffTest extends TestCase
         self::assertNoSniffErrorInFile($report);
     }
 
+    public function testErrorWithOneLinerClass(): void
+    {
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/ExceptionSuffixSniff/WrongExceptionNameOneLinerClass.php');
+
+        self::assertSame(1, $report->getErrorCount());
+
+        self::assertSniffError(
+            phpcsFile: $report,
+            line: 5,
+            code: ExceptionSuffixSniff::class
+        );
+    }
+
     protected static function getSniffClassName(): string
     {
         return ExceptionSuffixSniff::class;
