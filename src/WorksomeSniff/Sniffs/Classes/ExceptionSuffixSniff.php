@@ -19,8 +19,6 @@ class ExceptionSuffixSniff implements Sniff
 
     public function process(File $phpcsFile, $stackPtr)
     {
-        $path = $phpcsFile->getFilename();
-
         $baseClassName = $phpcsFile->getTokensAsString($stackPtr + 6, 1);
 
         if($baseClassName === '\\') {

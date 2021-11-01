@@ -3,8 +3,9 @@
 namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\Classes\ExceptionSuffixSniff\App;
 
 use Exception;
+use Stringable;
 
-class CorrectException extends Exception
+class WrongExceptionName extends Exception implements Stringable
 {
 
 }

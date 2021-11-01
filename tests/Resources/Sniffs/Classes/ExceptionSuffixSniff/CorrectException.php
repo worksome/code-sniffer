@@ -4,7 +4,7 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\Classes\ExceptionSuffixS
 
 use Exception;
 
-class FullyQualifiedException extends \RuntimeException
+class CorrectException extends Exception
 {
 
 }
