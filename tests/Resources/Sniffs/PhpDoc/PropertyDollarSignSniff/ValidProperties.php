@@ -4,6 +4,7 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
 
 /**
  * @property array<string, string> $foo
+ * @property array<string,string> $bam
  * @property string $bar
  * @property int $baz
  */
