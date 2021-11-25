@@ -23,7 +23,7 @@ class PropertyDollarSignSniff implements Sniff
         }
 
         $value = $phpcsFile->getTokensAsString($stackPtr+2, 1);
-        $regex = '/^((\w)+(?:<\S+\s*\S+>)?[[:blank:]]+)(\$?\w+)/m';
+        $regex = '/^((\w)+(?:[<{].+[}>])?[[:blank:]]+)(\$?\w+)/m';
 
         if (!\Safe\preg_match($regex, $value, $matches)) {
             $phpcsFile->addError(
