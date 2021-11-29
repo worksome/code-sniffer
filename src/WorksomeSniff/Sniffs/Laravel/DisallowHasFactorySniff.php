@@ -33,7 +33,7 @@ class DisallowHasFactorySniff implements Sniff
 
     private function isHasFactoryNamespace(string $givenNamespace): bool
     {
-        if (strlen($this->partial) > 0) {
+        if ($this->partial !== null && strlen($this->partial) > 0) {
             $givenNamespace = $this->partial . Str::after($givenNamespace, Str::afterLast($this->partial, "\\"));
         }
 

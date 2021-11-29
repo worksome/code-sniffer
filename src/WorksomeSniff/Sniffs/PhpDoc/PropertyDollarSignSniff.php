@@ -23,7 +23,7 @@ class PropertyDollarSignSniff implements Sniff
         }
 
         $value = $phpcsFile->getTokensAsString($stackPtr+2, 1);
-        $regex = '/^((\w)+(?:[<{].+[}>])?[[:blank:]]+)(\$?\w+)/m';
+        $regex = '/(?<variable>(?:\$\w+).*|(?:\w+))$/m';
 
         if (!\Safe\preg_match($regex, $value, $matches)) {
             $phpcsFile->addError(
@@ -34,7 +34,7 @@ class PropertyDollarSignSniff implements Sniff
             return;
         }
 
-        $variableName = $matches[3];
+        $variableName = $matches['variable'];
 
         // Variable has a dollar sign, so let's exist.
         if (str_starts_with($variableName, '$')) {

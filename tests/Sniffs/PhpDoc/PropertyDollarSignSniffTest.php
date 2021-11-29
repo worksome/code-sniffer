@@ -18,18 +18,27 @@ class PropertyDollarSignSniffTest extends TestCase
     {
         $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/PhpDoc/PropertyDollarSignSniff/InvalidProperties.php');
 
-        self::assertSame(2, $report->getErrorCount());
+        self::assertSame(3, $report->getErrorCount());
 
         self::assertSniffError(
             $report,
             $line = 6,
-            PropertyDollarSignSniff::class
+            PropertyDollarSignSniff::class,
+            message: 'All @property comment should have dollar sign.'
         );
 
         self::assertSniffError(
             $report,
             $line = 7,
-            PropertyDollarSignSniff::class
+            PropertyDollarSignSniff::class,
+            message: 'All @property comment should have dollar sign.'
+        );
+
+        self::assertSniffError(
+            $report,
+            $line = 8,
+            PropertyDollarSignSniff::class,
+            message: 'All @property comment should have dollar sign.'
         );
     }
 

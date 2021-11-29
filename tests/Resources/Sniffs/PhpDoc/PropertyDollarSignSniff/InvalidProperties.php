@@ -5,6 +5,7 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
 /**
  * @property string foo
  * @property int bar
+ * @property bar works well
  */
 class InvalidProperties
 {
