@@ -7,7 +7,11 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
  * @property array<string,string> $bam
  * @property array{foo: string, bar: int} $foobar
  * @property string $bar
- * @property int $baz
+ * @property int $baz that is really cool
+ * @property string|int $foz
+ * @property $for kinda cool
+ * @property $far
+ * @property int    $test
  */
 class ValidProperties
 {
