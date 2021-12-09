@@ -10,7 +10,7 @@ class DisallowPhpUnitTestSniffTest extends TestCase
 {
     public function testNoErrors(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PestTest.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PestTest.php.stub');
 
         self::assertNoSniffErrorInFile($report);
     }
