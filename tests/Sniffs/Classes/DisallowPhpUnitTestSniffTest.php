@@ -23,11 +23,23 @@ class DisallowPhpUnitTestSniffTest extends TestCase
             'testDirectories' => ['/tests/']
         ]);
 
-        self::assertSame(1, $report->getErrorCount());
+        self::assertSame(3, $report->getErrorCount());
 
         self::assertSniffError(
             phpcsFile: $report,
-            line: 11,
+            line: 9,
+            code: DisallowPhpUnitTestSniff::class
+        );
+
+        self::assertSniffError(
+            phpcsFile: $report,
+            line: 13,
+            code: DisallowPhpUnitTestSniff::class
+        );
+
+        self::assertSniffError(
+            phpcsFile: $report,
+            line: 22,
             code: DisallowPhpUnitTestSniff::class
         );
     }
