@@ -7,6 +7,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class DisallowPhpUnitTestSniff implements Sniff
 {
+    /**
+     * @var array<int, string>
+     */
+    public array $testDirectories = [
+        '/tests/',
+    ];
+
     public function register(): array
     {
         return [
@@ -17,11 +24,24 @@ class DisallowPhpUnitTestSniff implements Sniff
 
     public function process(File $phpcsFile, $stackPtr): void
     {
-        // Make sure the file is in the `tests` directory.
-        if (! str_contains($phpcsFile->getFilename(), DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR)) {
-            return;
+        // Make sure the file is in one of the configured directories.
+        foreach ($this->getTestDirectories() as $testDirectory) {
+            if (str_contains($phpcsFile->getFilename(), $testDirectory)) {
+                $this->processFile($phpcsFile, $stackPtr);
+            }
         }
+    }
 
+    /**
+     * @return array<int, string>
+     */
+    private function getTestDirectories(): array
+    {
+        return array_map(fn (string $directory): string => str_replace('/', DIRECTORY_SEPARATOR, $directory), $this->testDirectories);
+    }
+
+    private function processFile(File $phpcsFile, $stackPtr): void
+    {
         match($phpcsFile->getTokens()[$stackPtr]['code']) {
             T_DOC_COMMENT_TAG => $this->checkDocCommentTag($phpcsFile, $stackPtr),
             T_FUNCTION => $this->checkMethod($phpcsFile, $stackPtr),

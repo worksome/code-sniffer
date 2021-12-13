@@ -10,14 +10,18 @@ class DisallowPhpUnitTestSniffTest extends TestCase
 {
     public function testNoErrors(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PestTest.php.stub');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PestTest.php.stub', [
+            'testDirectories' => ['/tests/']
+        ]);
 
         self::assertNoSniffErrorInFile($report);
     }
 
     public function testErrorWhenPhpUnitTestAnnotationEncountered(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PhpUnitWithTestAnnotationTest.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PhpUnitWithTestAnnotationTest.php', [
+            'testDirectories' => ['/tests/']
+        ]);
 
         self::assertSame(1, $report->getErrorCount());
 
@@ -30,7 +34,9 @@ class DisallowPhpUnitTestSniffTest extends TestCase
 
     public function testErrorWhenPhpUnitTestPrefixEncountered(): void
     {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PhpUnitWithTestPrefixTest.php');
+        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Classes/DisallowPhpUnitTestSniff/PhpUnitWithTestPrefixTest.php', [
+            'testDirectories' => ['/tests/']
+        ]);
 
         self::assertSame(1, $report->getErrorCount());
 
