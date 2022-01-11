@@ -2,56 +2,42 @@
 
 namespace Worksome\WorksomeSniff\Tests\Sniffs\Laravel;
 
-use SlevomatCodingStandard\Sniffs\TestCase;
 use Worksome\WorksomeSniff\Sniffs\Laravel\EventListenerSuffixSniff;
 
-class EventListenerSuffixSniffTest extends TestCase
-{
-    public function testNoErrors(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/CorrectListenerNameListener.php');
+beforeEach(function () {
+    $this->sniff = EventListenerSuffixSniff::class;
+});
 
-        self::assertNoSniffErrorInFile($report);
-    }
+it('has no errors', function (string $path) {
+    $report = checkFile($path);
 
-    public function testErrors(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/WrongListenerName.php');
+    expect($report)->toHaveNoSniffErrors();
+})->with([
+    'has suffix' => __DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/CorrectListenerNameListener.php',
+]);
 
-        self::assertSame(1, $report->getErrorCount());
+it('has errors', function (string $path, int $line) {
+    $report = checkFile($path);
 
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 5,
-            code: EventListenerSuffixSniff::class
-        );
-    }
+    expect($report)
+        ->toHaveSniffErrors(1)
+        ->toHaveSniffError(line: $line);
+})->with([
+    'has compact call' => [
+        __DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/WrongListenerName.php',
+        5
+    ],
+]);
 
-    public function testCanChangeSuffix(): void
-    {
-        $report = self::checkFile(
+it('can change suffix', function () {
+    $report = checkFile(
             __DIR__ . '/../../Resources/Sniffs/Laravel/EventListenerSuffixSniff/app/Listeners/ChangedSuffixListener.php',
-            [
-                'suffix' => 'Hears'
-            ]
-        );
+        [
+            'suffix' => 'Hears',
+        ]
+    );
 
-        self::assertSame(1, $report->getErrorCount());
-
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 5,
-            code: EventListenerSuffixSniff::class
-        );
-    }
-
-    protected static function getSniffClassName(): string
-    {
-        return EventListenerSuffixSniff::class;
-    }
-
-    protected static function getSniffName(): string
-    {
-        return 'WorksomeSniff.Laravel.EventListenerSuffix';
-    }
-}
+    expect($report)
+        ->toHaveSniffErrors(1)
+        ->toHaveSniffError(line: 5);
+});

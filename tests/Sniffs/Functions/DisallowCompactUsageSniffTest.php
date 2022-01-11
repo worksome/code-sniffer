@@ -2,39 +2,29 @@
 
 namespace Worksome\WorksomeSniff\Tests\Sniffs\Functions;
 
-use SlevomatCodingStandard\Sniffs\TestCase;
 use Worksome\WorksomeSniff\Sniffs\Functions\DisallowCompactUsageSniff;
 
-class DisallowCompactUsageSniffTest extends TestCase
-{
-    public function testNoErrors(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Functions/DisallowCompactUsageSniff/NoCompactCall.php');
-        self::assertNoSniffErrorInFile($report);
-    }
+beforeEach(function () {
+    $this->sniff = DisallowCompactUsageSniff::class;
+});
 
-    public function testErrors(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Functions/DisallowCompactUsageSniff/CompactCall.php');
+it('has no errors', function (string $path) {
+    $report = checkFile($path);
 
-        self::assertSame(1, $report->getErrorCount());
+    expect($report)->toHaveNoSniffErrors();
+})->with([
+    'no compact call' => __DIR__ . '/../../Resources/Sniffs/Functions/DisallowCompactUsageSniff/NoCompactCall.php',
+]);
 
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 13,
-            code: DisallowCompactUsageSniff::class
-        );
+it('has errors', function (string $path, int $line) {
+    $report = checkFile($path);
 
-        self::assertAllFixedInFile($report);
-    }
-
-    protected static function getSniffClassName(): string
-    {
-        return DisallowCompactUsageSniff::class;
-    }
-
-    protected static function getSniffName(): string
-    {
-        return 'WorksomeSniff.Functions.DisallowCompactUsage';
-    }
-}
+    expect($report)
+        ->toHaveSniffErrors(1)
+        ->toHaveSniffError(line: $line);
+})->with([
+    'has compact call' => [
+        __DIR__ . '/../../Resources/Sniffs/Functions/DisallowCompactUsageSniff/CompactCall.php',
+        13
+    ],
+]);
