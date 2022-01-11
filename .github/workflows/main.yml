@@ -7,10 +7,11 @@ jobs:
   setup:
     timeout-minutes: 30
     runs-on: ubuntu-latest
-    name: Pest on PHP ${{ matrix.php }}
+    name: Pest on PHP ${{ matrix.php }} with composer ${{ matrix.dependencies }}
     strategy:
       matrix:
         php: ["8.0", "8.1"]
+        dependencies: ["lowest", "highest"]
 
     steps:
       - name: Checkout code
@@ -25,7 +26,9 @@ jobs:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Composer dependencies
-        uses: worksome/composer-install@fix-race-condition
+        uses: ramsey/composer-install@v2
+        with:
+          dependency-versions: ${{ matrix.dependencies }}
 
       - name: Test php code
-        run: vendor/bin/phpunit
+        run: vendor/bin/pest

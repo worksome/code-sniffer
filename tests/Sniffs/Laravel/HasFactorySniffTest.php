@@ -3,71 +3,42 @@
 namespace Worksome\WorksomeSniff\Tests\Sniffs\Laravel;
 
 use SlevomatCodingStandard\Sniffs\TestCase;
+use Worksome\WorksomeSniff\Sniffs\Functions\DisallowCompactUsageSniff;
 use Worksome\WorksomeSniff\Sniffs\Laravel\DisallowHasFactorySniff;
 
-class HasFactorySniffTest extends TestCase
-{
+beforeEach(function () {
+    $this->sniff = DisallowHasFactorySniff::class;
+});
 
-    public function testNoErrors(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithoutHasFactory.php');
+it('has no errors', function (string $path) {
+    $report = checkFile($path);
 
-        self::assertNoSniffErrorInFile($report);
+    expect($report)->toHaveNoSniffErrors();
+})->with([
+    'no hasFactory trait' => __DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithoutHasFactory.php',
+]);
+
+it('has errors', function (string $path, array $lines) {
+    $report = checkFile($path);
+
+    expect($report)
+        ->toHaveSniffErrors(count($lines));
+
+    foreach ($lines as $line) {
+        expect($report)->toHaveSniffError(line: $line);
     }
 
-    public function testErrorsInNamespace(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactory.php');
-
-        self::assertSame(2, $report->getErrorCount());
-
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 5,
-            code: DisallowHasFactorySniff::class,
-        );
-
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 9,
-            code: DisallowHasFactorySniff::class,
-        );
-    }
-
-    public function testErrorsWhenUsingDirectly(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactoryDirectly.php');
-
-        self::assertSame(1, $report->getErrorCount());
-
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 7,
-            code: DisallowHasFactorySniff::class,
-        );
-    }
-
-    public function testErrorsWhenUsingMixed(): void
-    {
-        $report = self::checkFile(__DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactoryMixed.php');
-
-        self::assertSame(1, $report->getErrorCount());
-
-        self::assertSniffError(
-            phpcsFile: $report,
-            line: 10,
-            code: DisallowHasFactorySniff::class,
-        );
-    }
-
-    protected static function getSniffClassName(): string
-    {
-        return DisallowHasFactorySniff::class;
-    }
-
-    protected static function getSniffName(): string
-    {
-        return 'WorksomeSniff.Laravel.DisallowHasFactory';
-    }
-
-}
+})->with([
+    'has HasFactory trait' => [
+        __DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactory.php',
+        [5, 9],
+    ],
+    'via FQCN' => [
+        __DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactoryDirectly.php',
+        [7],
+    ],
+    'via mixed import' => [
+        __DIR__ . '/../../Resources/Sniffs/Laravel/DisallowHasFactorySniff/app/Models/WithHasFactoryMixed.php',
+        [10],
+    ]
+]);
