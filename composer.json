@@ -32,5 +32,6 @@
     "require-dev": {
         "pestphp/pest": "^1.21",
         "symfony/var-dumper": "^5.3"
-    }
+    },
+    "minimum-stability": "dev"
 }
