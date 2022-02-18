@@ -11,6 +11,7 @@
                 <element key="c" value="null"/>
                 <element key="var_dump" value="null"/>
                 <element key="ddd" value="null"/>
+                <element key="ray" value="null"/>
             </property>
         </properties>
     </rule>
