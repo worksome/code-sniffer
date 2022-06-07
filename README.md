@@ -70,6 +70,13 @@ Enforces event listeners to end with a specific suffix, this suffix is defaulted
 | --- | ---  |
 | suffix | Listener |
 
+### Disallow blade outside of the `resources` directory
+Makes sure no `.blade.php` files exist outside of Laravel's `resources` directory.
+
+| parameters | defaults |
+| --- | ---  |
+| resourcesDirectory | {YOUR_PROJECT}/resources |
+
 ## PhpDoc
 All custom sniffs which are not specific to Laravel.
 
