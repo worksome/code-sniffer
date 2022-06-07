@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Worksome\WorksomeSniff\Tests\Sniffs\Laravel;
 
 use Worksome\WorksomeSniff\Sniffs\Laravel\DisallowBladeOutsideOfResourcesDirectorySniff;
