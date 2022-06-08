@@ -31,6 +31,17 @@ it('has errors', function (string $path, array $lines) {
 })->with([
     'invalid properties' => [
         __DIR__ . '/../../Resources/Sniffs/PhpDoc/PropertyDollarSignSniff/InvalidProperties.php',
-        [6, 7, 8],
+        [6, 7, 8, 9, 10, 11],
+    ],
+]);
+
+it('can fix errors', function (string $path, string $fixedPath) {
+    $file = checkFile($path);
+
+    expect($file)->toMatchFixed($fixedPath);
+})->with([
+    'invalid properties' => [
+        __DIR__ . '/../../Resources/Sniffs/PhpDoc/PropertyDollarSignSniff/InvalidProperties.php',
+        __DIR__ . '/../../Resources/Sniffs/PhpDoc/PropertyDollarSignSniff/Fixed/InvalidProperties.php.fixed',
     ],
 ]);

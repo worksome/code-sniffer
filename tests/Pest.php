@@ -14,6 +14,7 @@
 use Illuminate\Support\Str;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\LocalFile;
+use PHP_CodeSniffer\Fixer;
 use PHP_CodeSniffer\Runner;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHPUnit\Framework\Assert;
@@ -58,6 +59,15 @@ expect()->extend('toHaveSniffError', function (int $line) {
             PHP_EOL
         )
     );
+
+    return $this;
+});
+
+expect()->extend('toMatchFixed', function (string $fixedFilePath) {
+    $this->value->disableCaching();
+    $this->value->fixer->fixFile();
+
+    Assert::assertEquals(file_get_contents($fixedFilePath), $this->value->fixer->getContents());
 
     return $this;
 });
