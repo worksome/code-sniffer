@@ -2,9 +2,10 @@
 
 namespace Worksome\WorksomeSniff\Sniffs\PhpDoc;
 
+use InvalidArgumentException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use function Safe\preg_replace;
+use Worksome\WorksomeSniff\Support\PropertyDoc;
 
 class PropertyDollarSignSniff implements Sniff
 {
@@ -17,43 +18,64 @@ class PropertyDollarSignSniff implements Sniff
 
     public function process(File $phpcsFile, $stackPtr)
     {
-        // Check if @property
-        if (!str_contains($phpcsFile->getTokensAsString($stackPtr, 1), '@property')) {
+        try {
+            $propertyDoc = PropertyDoc::from($this->getLineOfDocblock($phpcsFile, $stackPtr));
+        } catch (InvalidArgumentException) {
             return;
         }
 
-        $value = $phpcsFile->getTokensAsString($stackPtr+2, 1);
-        $regex = '/(?<variable>(?:\$\w+).*|(?:\w+))$/m';
-
-        if (!\Safe\preg_match($regex, $value, $matches)) {
-            $phpcsFile->addError(
-                "@property has invalid format.",
-                $stackPtr,
-                self::class
-            );
-            return;
-        }
-
-        $variableName = $matches['variable'];
-
-        // Variable has a dollar sign, so let's exist.
-        if (str_starts_with($variableName, '$')) {
+        if ($propertyDoc->variableHasDollarSymbol()) {
             return;
         }
 
         $phpcsFile->addFixableError(
-            "All @property comment should have dollar sign.",
+            "All @property variables should start with a dollar symbol.",
             $stackPtr,
             self::class
         );
 
-        $replacement = preg_replace($regex,
-            '$1\$$3',
-            $value);
+        if ($phpcsFile->fixer === null) {
+            return;
+        }
 
-        $phpcsFile->fixer->replaceToken(
-            $stackPtr+2,
-            $replacement
-        );
+        $this->replaceLineOfDocblock($phpcsFile, $stackPtr, " {$propertyDoc->joined()}" . PHP_EOL);
+    }
+
+    private function getLineOfDocblock(File $phpcsFile, int $startPtr): string
+    {
+        $currentPointer = $startPtr;
+        $content = '';
+
+        while (! str_ends_with($content, PHP_EOL)) {
+            if ($phpcsFile->numTokens === $currentPointer) {
+                continue;
+            }
+
+            $content .= $phpcsFile->getTokensAsString($currentPointer, 1);
+            $currentPointer += 1;
+        }
+
+        return trim($content);
+    }
+
+    private function replaceLineOfDocblock(File $phpcsFile, int $startPtr, string $newContent): void
+    {
+        $eolPointer = $startPtr;
+        $content = '';
+
+        do {
+            if ($phpcsFile->numTokens === $eolPointer) {
+                continue;
+            }
+
+            $eolPointer += 1;
+            $content = $phpcsFile->getTokensAsString($eolPointer, 1);
+        } while (! str_ends_with($content, PHP_EOL));
+
+        foreach (array_reverse(range($startPtr, $eolPointer)) as $ptrToDelete) {
+            $phpcsFile->fixer->replaceToken($ptrToDelete, '');
+        }
+
+        $phpcsFile->fixer->replaceToken($startPtr - 1, $newContent);
     }
 }
