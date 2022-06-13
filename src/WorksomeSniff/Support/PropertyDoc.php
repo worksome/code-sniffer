@@ -79,7 +79,7 @@ final class PropertyDoc
             [$\w]+                              # Match any word, including words with a '$' symbol.
             (                                   # Capture group #2.
                 [{<\[]                            # Match any '<' or '{' symbols, which are used in PHPStan generics.
-                (?:[^\[{<>}\]]+|(?2))*+             # Recursively ignore any matching sets of '<' and '>' or '{' and '}' found in nested types. Eg: `Collection<int, array<string, string>>`.
+                (?:[^\[{<>}\]]+|(?2))*+             # Recursively ignore any matching sets of '<' and '>', '{' and '}' or '[' and ']' found in nested types. Eg: `Collection<int, array<string, string>>`.
                 [>}\]]                            # Until we match the closing '>' or '}'.
             )?                                  # End capture group #2. Not all types are generics, so capture group 2 is optional.
         )                                       # End capture group #1.
