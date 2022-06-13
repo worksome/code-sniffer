@@ -29,7 +29,7 @@ final class PropertyDoc
 
         $typeMatches = [];
         preg_match(self::regexForTypes(), $detail, $typeMatches);
-
+dump($typeMatches);
         $types = $typeMatches[0];
         $remainderAfterType = Str::of($detail)->after($types)->trim();
 
@@ -76,11 +76,11 @@ final class PropertyDoc
         return <<<REGEXP
         /
         (                                       # Capture group #1.
-            [$\w]+                              # Match any word, including words with a '$' symbol.
+            [$\\\\\w]+                              # Match any word, including words with '$' or '\' symbols.
             (                                   # Capture group #2.
-                [{<\[]                            # Match any '<' or '{' symbols, which are used in PHPStan generics.
-                (?:[^\[{<>}\]]+|(?2))*+             # Recursively ignore any matching sets of '<' and '>', '{' and '}' or '[' and ']' found in nested types. Eg: `Collection<int, array<string, string>>`.
-                [>}\]]                            # Until we match the closing '>' or '}'.
+                [\[{<]                            # Match any '<' or '{' symbols, which are used in PHPStan generics.
+                (?:[^\[\]{}<>]+|(?2))*+             # Recursively ignore any matching sets of '<' and '>', '{' and '}' or '[' and ']' found in nested types. Eg: `Collection<int, array<string, string>>`.
+                [\]}>]                            # Until we match the closing '>' or '}'.
             )?                                  # End capture group #2. Not all types are generics, so capture group 2 is optional.
         )                                       # End capture group #1.
         (                                       # Capture group #3.
