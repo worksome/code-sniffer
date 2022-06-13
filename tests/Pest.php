@@ -23,7 +23,7 @@ expect()->extend('toHaveNoSniffErrors', function () {
     /** @var \PHP_CodeSniffer\Files\File $value */
     $value = $this->value;
 
-    Assert::assertEmpty($value->getErrors());
+    Assert::assertEmpty($value->getErrors(), "The following errors were found: " . PHP_EOL . json_encode($value->getErrors()));
 
     return $this;
 });
