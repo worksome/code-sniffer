@@ -29,7 +29,7 @@ final class PropertyDoc
 
         $typeMatches = [];
         preg_match(self::regexForTypes(), $detail, $typeMatches);
-dump($typeMatches);
+
         $types = $typeMatches[0];
         $remainderAfterType = Str::of($detail)->after($types)->trim();
 
