@@ -9,6 +9,7 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
  * @property Collection<int, callable(string): bool|null> $boom This is a collection
  * @property array{foo: string, bar: array<int, string>} | null $bam This is a collection
  * @property-read $foo
+ * @property string[] $whoops
  */
 class InvalidProperties
 {

@@ -31,7 +31,7 @@ it('has errors', function (string $path, array $lines) {
 })->with([
     'invalid properties' => [
         __DIR__ . '/../../Resources/Sniffs/PhpDoc/PropertyDollarSignSniff/InvalidProperties.php',
-        [6, 7, 8, 9, 10, 11],
+        [6, 7, 8, 9, 10, 11, 12],
     ],
 ]);
 

@@ -12,6 +12,8 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
  * @property $for kinda cool
  * @property $far
  * @property int    $test
+ * @property int[] $integers
+ * @property string|int[] $stringsOrIntegers
  */
 class ValidProperties
 {
