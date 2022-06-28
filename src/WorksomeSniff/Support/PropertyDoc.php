@@ -76,7 +76,7 @@ final class PropertyDoc
         return <<<REGEXP
         /
         (                                       # Capture group #1.
-            [$\\\\\w]+                              # Match any word, including words with '$' or '\' symbols.
+            [$\\\\\w-]+                           # Match any word, including words with '$', '\', or '-' symbols.
             (                                   # Capture group #2.
                 [\[{<]                            # Match any '<' or '{' symbols, which are used in PHPStan generics.
                 (?:[^\[\]{}<>]+|(?2))*+             # Recursively ignore any matching sets of '<' and '>', '{' and '}' or '[' and ']' found in nested types. Eg: `Collection<int, array<string, string>>`.

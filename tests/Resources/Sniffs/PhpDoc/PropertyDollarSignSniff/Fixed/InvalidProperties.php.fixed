@@ -10,6 +10,8 @@ namespace Worksome\WorksomeSniff\Tests\Resources\Sniffs\PhpDoc\PropertyDollarSig
  * @property array{foo: string, bar: array<int, string>} | null $bam This is a collection
  * @property-read $foo
  * @property string[] $whoops
+ * @property positive-int $nice_int
+ * @property non-empty-array<\Exception> $non_empty_array
  */
 class InvalidProperties
 {
