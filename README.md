@@ -1,3 +1,5 @@
+:warning: Deprecated in favor of [coding-style](https://github.com/worksome/coding-style) package :warning:
+
 # Worksome's custom sniffs
 This package contains all of Worksome's custom sniffs and configuration.
 
